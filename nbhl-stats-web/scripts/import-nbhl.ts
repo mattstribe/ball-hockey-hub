@@ -1,6 +1,6 @@
 /**
  * Loads CSV exports from ../NBHL STATS into Supabase.
- * Requires SUPABASE_SERVICE_ROLE_KEY (and URL) in .env.local — never expose the service key in the browser.
+ * Requires SUPABASE_SERVICE_ROLE_KEY (legacy JWT) or a new secret key (sb_secret_...) in .env.local — never expose in the browser.
  *
  * Usage: npm run import:nbhl
  */
@@ -83,7 +83,7 @@ async function main() {
     /YOUR_PROJECT_REF|your_project_ref|your_anon_key|your_service_role_key/i;
   if (looksPlaceholder.test(url) || looksPlaceholder.test(serviceKey)) {
     console.error(
-      ".env.local still has example placeholders. Paste your real Project URL and service_role key from Supabase → Project Settings → API.",
+      ".env.local still has example placeholders. Paste your real Project URL and an elevated key (Legacy service_role JWT or API Keys → Secret sb_secret_...) from Supabase → Project Settings → API.",
     );
     process.exit(1);
   }
