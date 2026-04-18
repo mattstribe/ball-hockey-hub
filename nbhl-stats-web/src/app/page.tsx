@@ -179,7 +179,7 @@ export default async function Home({
               defaultValue={role}
               className="min-w-[8rem] rounded-md border border-zinc-300 bg-white px-3 py-2 text-base dark:border-zinc-700 dark:bg-zinc-900"
             >
-              <option value="skater">Skaters</option>
+              <option value="skater">Players</option>
               <option value="goalie">Goalies</option>
             </select>
           </label>
