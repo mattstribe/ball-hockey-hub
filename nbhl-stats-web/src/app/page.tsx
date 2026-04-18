@@ -57,7 +57,7 @@ export default async function Home({
     );
   }
 
-  const table = role === "skater" ? "skating_stats" : "goalie_stats";
+  const table = role === "skater" ? "player_stats" : "goalie_stats";
 
   const { data: seasonRows } = await supabase.from(table).select("season");
   const years = [
@@ -77,7 +77,7 @@ export default async function Home({
   let dataQuery =
     role === "skater"
       ? supabase
-          .from("skating_stats")
+          .from("player_stats")
           .select(
             "rank,player_name,jersey,team_name,division,tier,gp,g,a,pts,pim,ppg,season,segment",
           )
@@ -202,7 +202,7 @@ export default async function Home({
         {!error && rows && rows.length === 0 && (
           <p className="text-zinc-600 dark:text-zinc-400">
             No rows for these filters. If the database is empty, apply{" "}
-            <code className="text-sm">supabase/migrations/20250410000000_nbhl_stats.sql</code>{" "}
+            <code className="text-sm">supabase/migrations/</code> (SQL files, oldest first){" "}
             in the Supabase SQL editor, set{" "}
             <code className="text-sm">SUPABASE_SERVICE_ROLE_KEY</code> in{" "}
             <code className="text-sm">.env.local</code>, then run{" "}

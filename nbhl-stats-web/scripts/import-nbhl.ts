@@ -96,7 +96,7 @@ async function main() {
   const supabase = createClient(url, serviceKey);
 
   const { error: truncSkate } = await supabase
-    .from("skating_stats")
+    .from("player_stats")
     .delete()
     .gte("season", 1990);
   if (truncSkate) throw truncSkate;
@@ -185,7 +185,7 @@ async function main() {
   const chunk = 500;
   for (let i = 0; i < skatingBatch.length; i += chunk) {
     const slice = skatingBatch.slice(i, i + chunk);
-    const { error } = await supabase.from("skating_stats").insert(slice);
+    const { error } = await supabase.from("player_stats").insert(slice);
     if (error) throw error;
     console.log(`Skating ${Math.min(i + chunk, skatingBatch.length)}/${skatingBatch.length}`);
   }
