@@ -4,7 +4,7 @@
  *
  * Usage: npm run import:nbhl
  */
-import "dotenv/config";
+import dotenv from "dotenv";
 import { createClient } from "@supabase/supabase-js";
 import { parse } from "csv-parse/sync";
 import fs from "node:fs";
@@ -12,6 +12,9 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const projectRoot = path.resolve(__dirname, "..");
+dotenv.config({ path: path.join(projectRoot, ".env.local") });
+dotenv.config({ path: path.join(projectRoot, ".env") });
 
 const STATS_DIR = path.resolve(__dirname, "../../NBHL STATS");
 
@@ -72,6 +75,15 @@ async function main() {
   if (!url || !serviceKey) {
     console.error(
       "Set NEXT_PUBLIC_SUPABASE_URL (or SUPABASE_URL) and SUPABASE_SERVICE_ROLE_KEY in .env.local",
+    );
+    process.exit(1);
+  }
+
+  const looksPlaceholder =
+    /YOUR_PROJECT_REF|your_project_ref|your_anon_key|your_service_role_key/i;
+  if (looksPlaceholder.test(url) || looksPlaceholder.test(serviceKey)) {
+    console.error(
+      ".env.local still has example placeholders. Paste your real Project URL and service_role key from Supabase → Project Settings → API.",
     );
     process.exit(1);
   }
